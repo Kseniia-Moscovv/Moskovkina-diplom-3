@@ -35,7 +35,7 @@ public class LoginTest {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
 
-        //System.setProperty("webdriver.chrome.driver", "src/test/resources/yandexdriver");
+//        System.setProperty("webdriver.chrome.driver", "src/main/resources/yandexdriver");
 
         driver = new ChromeDriver(options);
         driver.get("https://stellarburgers.nomoreparties.site");
