@@ -11,6 +11,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import praktikum.stellar.model.UserLogin;
 import praktikum.stellar.pageobjects.MainPage;
+import praktikum.stellar.utils.Constants;
 
 import java.io.File;
 
@@ -27,7 +28,7 @@ public class ConstructorTest {
 //        System.setProperty("webdriver.chrome.driver", "src/main/resources/yandexdriver");
 
         driver = new ChromeDriver(options);
-        driver.get("https://stellarburgers.nomoreparties.site");
+        driver.get(Constants.WEB_URL);
     }
 
     @After
@@ -37,14 +38,36 @@ public class ConstructorTest {
 
     @Test
     @DisplayName("Positive check to choose ingredient section")
-    @Description("Check that user can switch between ingredient sections")
+    @Description("Check that user can get into Sauce section")
 
-    public void checkToSwitchIngredientSections() {
+    public void checkToSwitchToSauceSection() {
         MainPage mainPage = new MainPage(driver);
 
         mainPage.clickOnSauceSection();
+        mainPage.waitForSaucesSectionToLoad();
+    }
+
+    @Test
+    @DisplayName("Positive check to choose ingredient section")
+    @Description("Check that user can get into Topping section")
+
+    public void checkToSwitchToToppingSection() {
+        MainPage mainPage = new MainPage(driver);
+
         mainPage.clickOnToppingSection();
+        mainPage.waitForToppingSectionToLoad();
+    }
+
+    @Test
+    @DisplayName("Positive check to choose ingredient section")
+    @Description("Check that user can get into Buns section")
+
+    public void checkToSwitchToBunsSection() {
+        MainPage mainPage = new MainPage(driver);
+
+        mainPage.clickOnSauceSection();
         mainPage.clickOnBunsSection();
+        mainPage.waitForBunsSectionToLoad();
     }
 
 }

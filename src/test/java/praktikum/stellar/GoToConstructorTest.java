@@ -19,6 +19,7 @@ import praktikum.stellar.pageobjects.Header;
 import praktikum.stellar.pageobjects.LoginPage;
 import praktikum.stellar.pageobjects.MainPage;
 import praktikum.stellar.pageobjects.ProfilePage;
+import praktikum.stellar.utils.Constants;
 import praktikum.stellar.utils.UserGenerator;
 
 public class GoToConstructorTest {
@@ -41,7 +42,7 @@ public class GoToConstructorTest {
 //        System.setProperty("webdriver.chrome.driver", "src/main/resources/yandexdriver");
 
         driver = new ChromeDriver(options);
-        driver.get("https://stellarburgers.nomoreparties.site");
+        driver.get(Constants.WEB_URL);
 
         userClient.create(newUser);
 

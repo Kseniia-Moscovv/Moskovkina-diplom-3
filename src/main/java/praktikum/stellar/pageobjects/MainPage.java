@@ -18,6 +18,15 @@ public class MainPage {
     // Разделы ингредиентов для оформления заказа
     private final By ingredientSections = By.className("tab_tab__1SPyG");
 
+    // Заголовок раздела "Булки"
+    private final By nameOfBunsSection = By.xpath(".//h2[@class='text text_type_main-medium mb-6 mt-10'][text()='Булки']");
+
+    // Заголовок раздела "Соусы"
+    private final By nameOfSaucesSection = By.xpath(".//h2[@class='text text_type_main-medium mb-6 mt-10'][text()='Соусы']");
+
+    // Заголовок раздела "Начинки"
+    private final By nameOfToppingsSection = By.xpath(".//h2[@class='text text_type_main-medium mb-6 mt-10'][text()='Начинки']");
+
     public MainPage(WebDriver driver) {
         this.driver = driver;
     }
@@ -44,5 +53,20 @@ public class MainPage {
 
     @Step("Click on buns section")
     public void clickOnBunsSection() { driver.findElements(ingredientSections).get(0).click(); }
+
+    @Step("Wait for Buns section to load")
+    public void waitForBunsSectionToLoad() {
+        new WebDriverWait(driver, 10).until(ExpectedConditions.presenceOfElementLocated(nameOfBunsSection));
+    }
+
+    @Step("Wait for Sauces section to load")
+    public void waitForSaucesSectionToLoad() {
+        new WebDriverWait(driver, 10).until(ExpectedConditions.presenceOfElementLocated(nameOfSaucesSection));
+    }
+
+    @Step("Wait for Toppings section to load")
+    public void waitForToppingSectionToLoad() {
+        new WebDriverWait(driver, 10).until(ExpectedConditions.presenceOfElementLocated(nameOfToppingsSection));
+    }
 }
 

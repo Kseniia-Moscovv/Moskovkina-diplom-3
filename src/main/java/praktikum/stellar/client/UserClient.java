@@ -8,7 +8,7 @@ import praktikum.stellar.model.UserCreate;
 import static io.restassured.RestAssured.given;
 
 public class UserClient extends Client {
-    protected static final String USER_URI = BASE_URI + "auth/";
+    protected static final String USER_URI = "auth/";
 
     @Step("Create user {userCreate}")
     public ValidatableResponse create(UserCreate userCreate) {

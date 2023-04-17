@@ -13,18 +13,19 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import praktikum.stellar.client.UserClient;
+import praktikum.stellar.model.UserCreate;
 import praktikum.stellar.model.UserLogin;
 import praktikum.stellar.pageobjects.Header;
 import praktikum.stellar.pageobjects.LoginPage;
 import praktikum.stellar.pageobjects.RegisterPage;
+import praktikum.stellar.utils.Constants;
+import praktikum.stellar.utils.UserGenerator;
 
 public class RegistrationTest {
     private WebDriver driver;
     private UserClient userClient = new UserClient();
-
-    private String userName = "Кевин";
-    private String email = "kevinisaminion@ya.ru";
-    private String password = "banana";
+    private UserCreate newUser = UserGenerator.getRandom();
+    private String wrongPassword = "1234";
 
     @BeforeClass
     public static void globalSetUp() {
@@ -38,10 +39,10 @@ public class RegistrationTest {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
 
-//        System.setProperty("webdriver.chrome.driver", "src/main/resources/yandexdriver");
+//      System.setProperty("webdriver.chrome.driver", "src/main/resources/yandexdriver");
 
         driver = new ChromeDriver(options);
-        driver.get("https://stellarburgers.nomoreparties.site");
+        driver.get(Constants.WEB_URL);
 
         Header header = new Header(driver);
         LoginPage loginPage = new LoginPage(driver);
@@ -56,14 +57,17 @@ public class RegistrationTest {
 
     @After
     public void tearDown() {
-        String accessToken = userClient.login(new UserLogin(email, password)).extract().path("accessToken");
+        String accessToken = userClient.login(new UserLogin(newUser.getEmail(), newUser.getPassword())).extract().path("accessToken");
+
+        if (accessToken == null) {
+            accessToken = userClient.login(new UserLogin(newUser.getEmail(), wrongPassword)).extract().path("accessToken");
+        }
 
         if (accessToken != null) {
             userClient.delete(accessToken);
         }
 
         driver.quit();
-
     }
 
     @Test
@@ -73,7 +77,7 @@ public class RegistrationTest {
         RegisterPage registerPage = new RegisterPage(driver);
         LoginPage loginPage = new LoginPage(driver);
 
-        registerPage.fillInRegistrationForm(userName, email, password);
+        registerPage.fillInRegistrationForm(newUser.getName(), newUser.getEmail(), newUser.getPassword());
         loginPage.waitForLoginPageToLoad();
     }
 
@@ -83,7 +87,7 @@ public class RegistrationTest {
     public void checkToRegistrationFormWithIncorrectPassword() {
         RegisterPage registerPage = new RegisterPage(driver);
 
-        registerPage.fillInRegistrationForm(userName, email, "papoi");
+        registerPage.fillInRegistrationForm(newUser.getName(), newUser.getEmail(), wrongPassword);
         registerPage.waitErrorMessage();
     }
 }
