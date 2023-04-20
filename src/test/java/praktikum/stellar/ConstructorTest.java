@@ -39,35 +39,32 @@ public class ConstructorTest {
     @Test
     @DisplayName("Positive check to choose ingredient section")
     @Description("Check that user can get into Sauce section")
-
     public void checkToSwitchToSauceSection() {
         MainPage mainPage = new MainPage(driver);
 
         mainPage.clickOnSauceSection();
-        mainPage.waitForSaucesSectionToLoad();
+        mainPage.waitForSauceSectionToGetActiveClass();
     }
 
     @Test
     @DisplayName("Positive check to choose ingredient section")
     @Description("Check that user can get into Topping section")
-
     public void checkToSwitchToToppingSection() {
         MainPage mainPage = new MainPage(driver);
 
         mainPage.clickOnToppingSection();
-        mainPage.waitForToppingSectionToLoad();
+        mainPage.waitForToppingSectionToGetActiveClass();
     }
 
     @Test
     @DisplayName("Positive check to choose ingredient section")
     @Description("Check that user can get into Buns section")
-
     public void checkToSwitchToBunsSection() {
         MainPage mainPage = new MainPage(driver);
 
         mainPage.clickOnSauceSection();
         mainPage.clickOnBunsSection();
-        mainPage.waitForBunsSectionToLoad();
+        mainPage.waitForBunsSectionToGetActiveClass();
     }
 
 }

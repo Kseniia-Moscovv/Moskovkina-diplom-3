@@ -25,7 +25,6 @@ public class RegistrationTest {
     private WebDriver driver;
     private UserClient userClient = new UserClient();
     private UserCreate newUser = UserGenerator.getRandom();
-    private String wrongPassword = "1234";
 
     @BeforeClass
     public static void globalSetUp() {
@@ -59,10 +58,6 @@ public class RegistrationTest {
     public void tearDown() {
         String accessToken = userClient.login(new UserLogin(newUser.getEmail(), newUser.getPassword())).extract().path("accessToken");
 
-        if (accessToken == null) {
-            accessToken = userClient.login(new UserLogin(newUser.getEmail(), wrongPassword)).extract().path("accessToken");
-        }
-
         if (accessToken != null) {
             userClient.delete(accessToken);
         }
@@ -85,9 +80,12 @@ public class RegistrationTest {
     @DisplayName("Negative check to register user")
     @Description("Check that user can't be registered with incorrect password")
     public void checkToRegistrationFormWithIncorrectPassword() {
+        String wrongPassword = "1234";
+        newUser.setPassword(wrongPassword);
+
         RegisterPage registerPage = new RegisterPage(driver);
 
-        registerPage.fillInRegistrationForm(newUser.getName(), newUser.getEmail(), wrongPassword);
+        registerPage.fillInRegistrationForm(newUser.getName(), newUser.getEmail(), newUser.getPassword());
         registerPage.waitErrorMessage();
     }
 }

@@ -27,6 +27,8 @@ public class MainPage {
     // Заголовок раздела "Начинки"
     private final By nameOfToppingsSection = By.xpath(".//h2[@class='text text_type_main-medium mb-6 mt-10'][text()='Начинки']");
 
+    private final String activeSectionClassname = "tab_tab_type_current__2BEPc";
+
     public MainPage(WebDriver driver) {
         this.driver = driver;
     }
@@ -45,28 +47,28 @@ public class MainPage {
         driver.findElement(profileButton).click();
     }
 
+    @Step("Click on buns section")
+    public void clickOnBunsSection() { driver.findElements(ingredientSections).get(0).click(); }
+
     @Step("Click on sauce section")
     public void clickOnSauceSection() { driver.findElements(ingredientSections).get(1).click(); }
 
     @Step("Click on topping section")
     public void clickOnToppingSection() { driver.findElements(ingredientSections).get(2).click(); }
 
-    @Step("Click on buns section")
-    public void clickOnBunsSection() { driver.findElements(ingredientSections).get(0).click(); }
-
-    @Step("Wait for Buns section to load")
-    public void waitForBunsSectionToLoad() {
-        new WebDriverWait(driver, 10).until(ExpectedConditions.presenceOfElementLocated(nameOfBunsSection));
+    @Step("Wait for active class to appear on buns section")
+    public void waitForBunsSectionToGetActiveClass() {
+        driver.findElements(ingredientSections).get(0).getAttribute("class").contains(activeSectionClassname);
     }
 
-    @Step("Wait for Sauces section to load")
-    public void waitForSaucesSectionToLoad() {
-        new WebDriverWait(driver, 10).until(ExpectedConditions.presenceOfElementLocated(nameOfSaucesSection));
+    @Step("Wait for active class to appear on sauce section")
+    public void waitForSauceSectionToGetActiveClass() {
+        driver.findElements(ingredientSections).get(1).getAttribute("class").contains(activeSectionClassname);
     }
 
-    @Step("Wait for Toppings section to load")
-    public void waitForToppingSectionToLoad() {
-        new WebDriverWait(driver, 10).until(ExpectedConditions.presenceOfElementLocated(nameOfToppingsSection));
+    @Step("Wait for active class to appear on topping section")
+    public void waitForToppingSectionToGetActiveClass() {
+        driver.findElements(ingredientSections).get(2).getAttribute("class").contains(activeSectionClassname);
     }
 }
 
